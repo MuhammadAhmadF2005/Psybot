@@ -1,9 +1,9 @@
 **Data Preprocessing & Modelling Notes**
 
-[CLEANING]  Drop row 2038 - fully null ghost row, artifact from dataset merge
-[CLEANING]  Fix dirty Stress labels - remap 'Moderate' → 'Moderate Stress', 'High' → 'High Perceived Stress' (10 rows, DIU extension)
-[CLEANING]  Drop 6 duplicates - exact matches across all 39 columns, keep first occurrence
-[CLEANING]  Collapse Depression bottom two classes - merge 'No Depression' (44 rows) into 'Minimal Depression' (97 rows) → standard PHQ-9 5-class system, combined 141 rows
+[CLEANING]  ✓ Drop row 2038 - fully null ghost row, artifact from dataset merge
+[CLEANING]  ✓ Fix dirty Stress labels - remap 'Moderate' → 'Moderate Stress', 'High' → 'High Perceived Stress' (10 rows, DIU extension)
+[CLEANING]  ✓ Drop 6 duplicates - exact matches across all 39 columns, keep first occurrence
+[CLEANING]  ✓ Collapse Depression bottom two classes - merge 'No Depression' (44 rows) into 'Minimal Depression' (97 rows) → standard PHQ-9 5-class system, combined 141 rows
 
 [INSPECTION]  Item-level variance per PSS/GAD/PHQ - skipped, revisit if needed
 [INSPECTION]  Cross-scale crosstabs - skipped, revisit if needed
