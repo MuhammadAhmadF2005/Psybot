@@ -26,11 +26,14 @@
 [FEATURE]   ✓ Step 7: Export all output CSVs (X_features.csv, y_stress.csv, y_anxiety.csv, y_depression.csv, mental_health_engineered.csv)
 [FEATURE]   ✓ Step 8: Final pipeline summary and verification in feature_engineering.ipynb
 
-[MODELLING] Three separate classifiers - one per condition (Stress, Anxiety, Depression), severity bands differ per instrument
-[MODELLING] Use weighted F1, not accuracy - class imbalance present across all three targets
-[MODELLING] Stratified K-Fold cross-validation
-[MODELLING] Candidate models - Logistic Regression (baseline), Random Forest, XGBoost
-[MODELLING] SMOTE - only if weighted F1 on minority classes remains poor after cleaning, do not apply preemptively
+[MODELLING] ✓ Step 1: Load feature matrix X and target Series (y_stress, y_anxiety, y_depression)
+[MODELLING] ✓ Step 2: Stratified 70/30 train/test split with aligned indices across targets (random_state=42)
+[MODELLING] ✓ Step 3: Logistic Regression baseline with StandardScaler (best for Stress: 0.9822, Anxiety: 0.9625, Depression: 0.9641)
+[MODELLING] ✓ Step 4: Random Forest classifier on unscaled features (Stress: 0.9147, Anxiety: 0.9128, Depression: 0.8328)
+[MODELLING] ✓ Step 5: XGBoost classifier on encoded integer labels (Stress: 0.9337, Anxiety: 0.9275, Depression: 0.8481)
+[MODELLING] ✓ Step 6: Comparative Weighted F1 summary table
+[MODELLING] ✓ Step 7: Stratified 5-Fold Cross Validation on full dataset (Stress CV: 0.9750, Anxiety CV: 0.9839, Depression CV: 0.9711)
+[MODELLING] ✓ Step 8: Export serialized model artifacts (best_model_stress.pkl, best_model_anxiety.pkl, best_model_depression.pkl, scaler.pkl)
 
 [README]    Update Depression class count from 6 to 5 after collapse
 [README]    Add University/Department exclusion rationale to feature engineering section
