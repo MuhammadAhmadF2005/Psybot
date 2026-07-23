@@ -161,3 +161,58 @@ Minimal Depression              141    6.9%  ← merged No + Minimal
   - Non-student populations
   - Non-South-Asian cultural contexts
 - These limitations must be stated explicitly in any deployment context
+---
+
+## 9. EDA Visualization Insights
+
+### 9a. Scale Score Distributions (Row 1 of Dashboard)
+- **Stress (PSS-10):** Right-skewed with a long left tail. Most scores cluster between 15–30. The distribution is roughly bell-shaped but pulls toward moderate-high, matching the ~66.7% proportion of the **Moderate Stress** label.
+- **Anxiety (GAD-7):** Bimodal distribution with two distinct peaks (one around 5–8 and another around 15–18). This suggests two distinct subpopulations in the dataset (one mild-to-moderate, one severe), which is a key clinical finding.
+- **Depression (PHQ-9):** Fairly uniform spread across scores 5–25 with a slight right skew and no strong central peak, reflecting the highly balanced class distribution.
+
+### 9b. Severity Class Distributions (Row 2 of Dashboard)
+- Visually confirms the clean category balances:
+  - **Stress:** Dominated by **Moderate Stress** (66.7%).
+  - **Anxiety:** **Severe Anxiety** is the single largest class (36.5%).
+  - **Depression:** Most balanced across the 5 target classes.
+
+### 9c. Scale Correlations & Scatters (Row 3 of Dashboard)
+- **Strong Positive Correlations:**
+  - Stress vs. Anxiety: `0.642`
+  - Stress vs. Depression: `0.686`
+  - Anxiety vs. Depression: `0.778` (strongest pair)
+- **Clinical Sign:** The high anxiety-depression correlation (`0.778`) highlights expected clinical comorbidity between these two conditions.
+- **Modeling Context:** Collinearity suggests shared predictors across separate targets. Clear color clustering in scatter plots indicates high feature discriminative power.
+
+### 9d. Item-Level Analysis (Row 4 of Dashboard)
+- **PSS-10 Items:** `PSS3` and `PSS4` show higher median responses and wider spreads. `PSS6` and `PSS7` are compressed toward lower values (lower variance, making them weaker predictive features).
+- **GAD-7 Items:** Uniform response profile across all 7 items, validating the high internal consistency of the GAD-7 scale.
+- **PHQ-9 Items:** `PHQ4` (fatigue/energy loss) has the highest median, marking it as the most commonly endorsed depression symptom. `PHQ9` (suicidal ideation) is heavily right-skewed; most students score 0, but a significant tail scores 3.
+- **Variance Comparison:** PSS items generally show higher variance than GAD and PHQ. Higher variance indicates more discriminative power, supporting item-level features over aggregate scores.
+
+### 9e. Demographic Splits (Row 5 of Dashboard)
+- **Gender:** Female students exhibit higher proportions of **High Perceived Stress** and **Severe Anxiety** than males. Depression distributions are closer, though females still skew more severe.
+- **Academic Year:** Minimal severity variation across academic years, though Fourth Year students have marginally higher rates of severe depression.
+- **Age:** 27–30 and fringe groups (Below 18, Above 30) show high variance due to small sample sizes (3–25 rows). 18–22 and 23–26 groups show very similar severity distributions.
+
+### 9f. Comorbidity Heatmaps (Row 6 of Dashboard)
+- **Stress vs. Anxiety:** High Perceived Stress strongly maps to Severe/Moderate Anxiety; Low Stress maps to Minimal/Mild Anxiety.
+- **Stress vs. Depression:** High Perceived Stress maps to Moderately Severe/Severe Depression; Low Stress maps to Minimal Depression.
+- **Anxiety vs. Depression:** Strongest comorbidity signature. Severe Anxiety maps overwhelmingly to Moderately Severe or Severe Depression. Minimal Anxiety maps to Minimal or Mild Depression.
+- **Chatbot Design Context:** High comorbidity justifies running all three screening scales on every user rather than selective routing.
+
+### 9g. CGPA 'Other' Inspection (Row 7 of Dashboard)
+- **Score & Severity Profile:** The `CGPA = 'Other'` group shows mean scores and class distributions that closely mirror the rest of the dataset.
+- **Conclusion:** Students who selected "Other" do not show outlier behavior. They likely belong to institutions using non-standard scales. It is safe to retain "Other" as a feature category during encoding.
+
+---
+
+## 10. Summary of Key EDA Findings for Supervisor Discussion
+
+1. **Bimodal Anxiety Scores:** GAD-7 scores show a bimodal distribution, suggesting the presence of two distinct subpopulations.
+2. **High Anxiety-Depression Correlation (0.778):** Strongest inter-scale relationship, reinforcing the logic of screening both conditions together.
+3. **Fatigue as Top Symptom:** `PHQ4` (fatigue) is the most commonly endorsed depression item in this population.
+4. **Suicidal Ideation Tail:** `PHQ9` shows a small but significant tail scoring 3, critical for referral trigger logic.
+5. **Item-Level Features:** Higher variance in individual items favors using item-level responses rather than aggregate scale values.
+6. **CGPA 'Other' Retention:** 'Other' GPA behaves normally and is safe to retain for encoding.
+7. **Weak Academic Year Predictor:** Academic year shows minimal effect on mental health severity classes.
