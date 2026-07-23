@@ -4,18 +4,27 @@
 [CLEANING]  ✓ Fix dirty Stress labels - remap 'Moderate' → 'Moderate Stress', 'High' → 'High Perceived Stress' (10 rows, DIU extension)
 [CLEANING]  ✓ Drop 6 duplicates - exact matches across all 39 columns, keep first occurrence
 [CLEANING]  ✓ Collapse Depression bottom two classes - merge 'No Depression' (44 rows) into 'Minimal Depression' (97 rows) → standard PHQ-9 5-class system, combined 141 rows
+[CLEANING]  ✓ Export cleaned dataset to mental_health_cleaned.csv
 
-[INSPECTION]  Item-level variance per PSS/GAD/PHQ - skipped, revisit if needed
-[INSPECTION]  Cross-scale crosstabs - skipped, revisit if needed
-[INSPECTION]  CGPA 'Other' group - 171 rows, meaning unclear, resolve before feature engineering
+[EDA]       ✓ Cell 1: Distribution plots (Histograms + KDE with threshold annotations)
+[EDA]       ✓ Cell 2: Class distributions (Countplots with counts & % annotations)
+[EDA]       ✓ Cell 3: Inter-scale correlation (Pearson heatmap & pairwise scatter plots)
+[EDA]       ✓ Cell 4: Item-level analysis (Boxplots per instrument & item response variance bar chart)
+[EDA]       ✓ Cell 5: Demographic splits (Normalized stacked bar charts & age boxplots)
+[EDA]       ✓ Cell 6: Comorbidity heatmaps (Cross-scale severity crosstabs)
+[EDA]       ✓ Cell 7: CGPA 'Other' group inspection (Mean score comparison & severity breakdown)
+[EDA]       ✓ Composite dashboard generation (eda_plots_combined.png)
+[EDA]       ✓ Document visualization findings in observations.md
 
-[FEATURE]   Drop University & Department from feature matrix - high cardinality, population-specific, keep in dataset but exclude from model inputs
-[FEATURE]   Ordinal encode Academic_Year and Current_CGPA - natural order exists
-[FEATURE]   Binary encode Gender and waiver_or_scholarship
-[FEATURE]   Handle Age fringe groups - 'Below 18' (4 rows), 'Above 30' (3 rows), collapse into adjacent bins or drop
-[FEATURE]   Handle Gender 'Prefer not to say' - 10 rows, too small for own category, decision pending
-[FEATURE]   Handle CGPA 'Other' - 171 rows, encode or drop pending inspection result
-[FEATURE]   Decide feature matrix scope - individual item scores (PSS1-10, GAD1-7, PHQ1-9) vs aggregate scale values only vs both
+[FEATURE]   ✓ Step 1: Drop University, Department, and aggregate scale totals (Stress/Anxiety/Depression Values)
+[FEATURE]   ✓ Step 2: Mode impute Gender 'Prefer not to say' (10 rows → 'Male')
+[FEATURE]   ✓ Step 3: Handle Age fringe groups - collapse 'Below 18' → '18-22', 'Above 30' → '27-30'
+[FEATURE]   ✓ Step 4: Ordinal encode Academic_Year and Current_CGPA as int64 with median value 2 for 'Other'
+[FEATURE]   ✓ Step 4: One-hot encode Gender, Age, waiver_or_scholarship with drop_first=True
+[FEATURE]   ✓ Step 5: Verify item score dtypes - cast all 26 item scores (PSS1-10, GAD1-7, PHQ1-9) to int64
+[FEATURE]   ✓ Step 6: Define feature matrix X (32 features) & target series (y_stress, y_anxiety, y_depression)
+[FEATURE]   ✓ Step 7: Export all output CSVs (X_features.csv, y_stress.csv, y_anxiety.csv, y_depression.csv, mental_health_engineered.csv)
+[FEATURE]   ✓ Step 8: Final pipeline summary and verification in feature_engineering.ipynb
 
 [MODELLING] Three separate classifiers - one per condition (Stress, Anxiety, Depression), severity bands differ per instrument
 [MODELLING] Use weighted F1, not accuracy - class imbalance present across all three targets
